@@ -1,4 +1,4 @@
-import { test, expect } from "../fixtures/tickets.fixture";
+import { test, expect } from "../../fixtures/tickets.fixture";
 
 test.describe.configure({ mode: "parallel", timeout: 60000 });
 
