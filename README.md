@@ -8,4 +8,6 @@ To mitigate this without hacks I used `pressSequentially` which types each chara
 ### Citations
 
 <https://playwright.dev/>
+https://github.com/playwright-community/eslint-plugin-playwright?tab=readme-ov-file
+https://eslint.org/
 List of timezone ids: <https://source.chromium.org/chromium/chromium/deps/icu.git/+/faee8bc70570192d82d2978a71e2a615788597d1:source/data/misc/metaZones.txt>
