@@ -10,6 +10,7 @@ export class SearchTicketsPage {
   readonly inFocusDate: Locator;
   readonly nextMonthIcon: Locator;
   readonly submitButton: Locator;
+  readonly disableCookieAcceptButton
 
   constructor (page: Page) {
     this.page = page;
@@ -20,6 +21,7 @@ export class SearchTicketsPage {
     this.inFocusDate = this.page.locator('[class*="picker__day--infocus"]');
     this.nextMonthIcon = this.page.getByRole('button', { name: 'Next month' });
     this.submitButton = this.page.getByRole('button', { name: 'Submit »' });
+    this.disableCookieAcceptButton = this.page.locator('[onclick*="javascript:disableCookieBar"]')
   }
 
   async selectDepartureStation (station: string): Promise<void> {

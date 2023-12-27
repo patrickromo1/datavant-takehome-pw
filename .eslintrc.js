@@ -13,6 +13,7 @@ module.exports = {
         '.eslintrc.{js,cjs}',
         'fixtures/**/*.ts',
         'pages/**/*.ts',
+        'playwright.config.ts',
         'tests/**/*.ts',
         'util/**/*.ts'
       ],
