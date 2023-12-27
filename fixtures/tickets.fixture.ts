@@ -1,5 +1,5 @@
 import { test as base } from '@playwright/test';
-import { BuyTicketsPage } from '../pages/buy-tickets.page.ts';
+import { BuyTicketsPage } from '../pages/buy-tickets.page';
 
 // Declare the types of your fixtures.
 interface BuyTicketFixture {
