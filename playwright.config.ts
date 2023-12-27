@@ -50,7 +50,7 @@ export default defineConfig({
     },
 
     {
-      name: 'webkit',
+      name: 'Desktop Safari',
       use: {
         ...devices['Desktop Safari'], // Use prepared auth state.
         storageState: 'playwright/.auth/cookie-consent.json'

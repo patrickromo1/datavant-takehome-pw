@@ -2,7 +2,7 @@ import { expect, test } from '../fixtures/tickets.fixture';
 
 test.describe.configure({ mode: 'parallel', timeout: 90000 });
 
-test('should persist ticket parameters after clicking the cancel button', async ({ page, searchTicketsPage, serviceTicketsPage }) => {
+test('should persist ticket parameters after clicking the cancel button', async ({ searchTicketsPage, serviceTicketsPage }) => {
   await searchTicketsPage.goto();
   await searchTicketsPage.selectDepartureStation('Lagos');
   await searchTicketsPage.selectArrivalStation('Porto - Campanha');
