@@ -12,6 +12,6 @@
     /* Completeness */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["fixtures/*.ts", "pages/*.ts", "tests/*.ts", "playwright.config.ts", ".eslintrc.js"],
+  "include": ["fixtures/**/*.ts", "pages/**/*.ts", "tests/**/*.ts", "util/*.ts", "playwright.config.ts", ".eslintrc.js"],
   "exclude": []
 }

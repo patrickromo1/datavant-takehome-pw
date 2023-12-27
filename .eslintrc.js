@@ -13,7 +13,8 @@ module.exports = {
         '.eslintrc.{js,cjs}',
         'fixtures/**/*.ts',
         'pages/**/*.ts',
-        'tests/**/*.ts'
+        'tests/**/*.ts',
+        'util/**/*.ts'
       ],
       parserOptions: {
         sourceType: 'script'
