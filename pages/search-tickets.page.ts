@@ -52,7 +52,7 @@ export class SearchTicketsPage {
       .click();
   }
 
-  async getInputValues (): Promise<{
+  async getTicketScheduleValues (): Promise<{
     departureStation: string
     departureDate: string
     arrivalStation: string
