@@ -2,7 +2,7 @@ import { expect, test } from '../fixtures/tickets.fixture';
 
 test.describe.configure({ mode: 'parallel', timeout: 90000 });
 
-test('should persist ticket parameters after clicking the cancel button', async ({ searchTicketsPage, serviceTicketsPage }) => {
+test('should persist ticket parameters after clicking the cancel button', async ({ page, searchTicketsPage, serviceTicketsPage }) => {
   await searchTicketsPage.goto();
   await searchTicketsPage.selectDepartureStation('Lagos');
   await searchTicketsPage.selectArrivalStation('Porto - Campanha');
@@ -12,7 +12,7 @@ test('should persist ticket parameters after clicking the cancel button', async 
   await searchTicketsPage.submitButton.click();
   await serviceTicketsPage.cancelButton.click();
   await serviceTicketsPage.spinnerIcon.waitFor({ state: 'hidden' })
-  await searchTicketsPage.departureTextInput.waitFor();
+  await searchTicketsPage.chatBubble.waitFor({ state: 'visible' });
   const endInputValues = await searchTicketsPage.getTicketScheduleValues();
   expect.soft(initialInputValues.departureStation).toBe(endInputValues.departureStation);
   expect.soft(initialInputValues.departureDate).toBe(endInputValues.departureDate);
