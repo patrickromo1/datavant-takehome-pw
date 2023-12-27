@@ -8,6 +8,7 @@ To mitigate this without hacks I used `pressSequentially` which types each chara
 ### Improvements
 
 * The calendar widget can be improved by indicating it's not disabled as an attribute.
+* The api call to fetch the pre-selected values in the forms is slow. On slower connections this can cause overlap with user input.
 
 ### Citations
 
