@@ -4,8 +4,10 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
+    
 jobs:
-  test:
+  playwright-build:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -15,6 +17,12 @@ jobs:
         node-version: 18
     - name: Install dependencies
       run: npm ci
+    - name: Static Code Analysis - Linting
+      run: npm run lint
+    - name: Static Code Analysis - Typechecking
+      run: npm run typecheck
+    - name: Static Code Analysis - Playwright Dry-run
+      run: npm run test:dryrun
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
