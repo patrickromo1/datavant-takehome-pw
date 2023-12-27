@@ -11,9 +11,6 @@ interface TicketFixture {
 export const test = base.extend<TicketFixture>({
   searchTicketsPage: async ({ page }, use) => {
     const searchTicketsPage = new SearchTicketsPage(page);
-    await page.goto('/passageiros/en/buy-tickets', {
-      waitUntil: 'domcontentloaded'
-    });
     await use(searchTicketsPage);
   },
   serviceTicketsPage: async ({ page }, use) => {

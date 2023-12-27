@@ -6,7 +6,7 @@ export class SearchTicketsPage {
   readonly departureTextInput: Locator;
   readonly departureDateInput: Locator;
   readonly arrivalTextInput: Locator;
-  readonly arrivalDateInput: Locator;
+  readonly returnDateInput: Locator;
   readonly inFocusDate: Locator;
   readonly nextMonthIcon: Locator;
   readonly submitButton: Locator;
@@ -16,10 +16,10 @@ export class SearchTicketsPage {
     this.departureTextInput = this.page.locator('[ng-model="depart"]');
     this.departureDateInput = this.page.locator('[ng-model="departDate"]');
     this.arrivalTextInput = this.page.locator('[ng-model="arrival"]');
-    this.arrivalDateInput = this.page.locator('[ng-model="returnDate"]')
-    this.inFocusDate = this.page.locator('[class*="picker__day--infocus"]')
+    this.returnDateInput = this.page.locator('[ng-model="returnDate"]');
+    this.inFocusDate = this.page.locator('[class*="picker__day--infocus"]');
     this.nextMonthIcon = this.page.getByRole('button', { name: 'Next month' });
-    this.submitButton = this.page.getByRole('button', { name: 'Submit »' })
+    this.submitButton = this.page.getByRole('button', { name: 'Submit »' });
   }
 
   async selectDepartureStation (station: string): Promise<void> {
@@ -42,9 +42,9 @@ export class SearchTicketsPage {
       .click();
   }
 
-  async selectArrivalDate (daysInAdvance: number = 0): Promise<void> {
+  async selectReturnDate (daysInAdvance: number = 0): Promise<void> {
     const { futureDay, sameMonth } = getFutureDate(daysInAdvance);
-    await this.arrivalDateInput.click();
+    await this.returnDateInput.click();
     if (!sameMonth) await this.nextMonthIcon.click();
     await this.page
       .getByRole('gridcell', { name: futureDay, exact: true, disabled: false })
@@ -52,7 +52,28 @@ export class SearchTicketsPage {
       .click();
   }
 
+  async getInputValues (): Promise<{
+    departureStation: string
+    departureDate: string
+    arrivalStation: string
+    returnDate: string
+  }> {
+    const departureStation = await this.departureTextInput.inputValue();
+    const departureDate = await this.departureDateInput.inputValue();
+    const arrivalStation = await this.arrivalTextInput.inputValue();
+    const returnDate = await this.returnDateInput.inputValue();
+
+    return {
+      departureStation,
+      departureDate,
+      arrivalStation,
+      returnDate
+    }
+  }
+
   async goto (): Promise<void> {
-    await this.page.goto('/');
+    await this.page.goto('/passageiros/en/buy-tickets', {
+      waitUntil: 'domcontentloaded'
+    });
   }
 }
