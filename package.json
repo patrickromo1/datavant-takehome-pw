@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "npx playwright install --with-deps",
     "codegen": "npx playwright codegen https://www.cp.pt/passageiros/en/buy-tickets",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
+    "check:style": "npm run lint && npm run typecheck && npm run test:dryrun",
     "test": "playwright test --project=chromium",
     "test:ui": "playwright test --project=chromium --ui",
     "test:headed": "playwright test --project=chromium --headed",
