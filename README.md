@@ -21,6 +21,7 @@ Playwright, Typescript and Github Actions.
       - [setup](#setup)
     - [util](#util)
   - [Styleguide](#styleguide)
+  - [Reporting](#reporting)
   - [Oddities](#oddities)
     - [Calendar Widget](#calendar-widget)
     - [General](#general)
@@ -196,6 +197,11 @@ npm run check:style
 ```
 
 To see what all these commands are doing under the hook check them out in the `scripts` portion of the `package.json`.
+
+## Reporting
+
+The primary report in continuous integration is the playwright html report. Embedded within this report can be screenshots, logs, videos and traces.
+Currently the most recent Github Actions run from this repository will publish it at <https://patrickromo1.github.io/datavant-takehome-pw/>. It's possible to spin up the html report with the artifacts locally but it takes some time to download the file and then spin it up it's more user friendly to just upload it as a static site.
 
 ## Oddities
 
