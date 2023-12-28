@@ -20,7 +20,7 @@ export default defineConfig({
   use: {
     baseURL: 'https://www.cp.pt',
     screenshot: process.env.CI ? 'on' : 'only-on-failure',
-    video: process.env.CI ? 'on' :'retain-on-failure',
+    video: process.env.CI ? 'on' : 'retain-on-failure',
     trace: process.env.CI ? 'on' : 'retain-on-failure'
   },
   /* Configure projects for major browsers */
