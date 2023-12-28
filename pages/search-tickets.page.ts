@@ -77,7 +77,6 @@ export class SearchTicketsPage {
 
   async goto ({ locale = 'en' }: { locale?: string } = {}): Promise<void> {
     const searchUrl = locale === 'pt' ? 'passageiros/pt/comprar-bilhetes' : '/passageiros/en/buy-tickets';
-    console.log({ searchUrl })
     await this.page.goto(searchUrl, {
       waitUntil: 'domcontentloaded'
     });
