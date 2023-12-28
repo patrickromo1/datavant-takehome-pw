@@ -58,7 +58,7 @@ node -v
 npm install
 ```
 
-- Verify everything was installed directly by running your first test.
+- Verify everything was installed correctly by running your first test.
 
 ```sh
 npm test
@@ -110,8 +110,8 @@ npm run codegen # npx playwright codegen https://www.cp.pt/passageiros/en/buy-ti
 
 After getting a basic script that works you can begin refactoring it using page objects and utility functions to have the test conform to your requirements. At this stage it's recommended to use the Playwright UI (similar to Cypress) which allows you to step through your test run, pull new locators and view all your logs, dev console information and source code.
 
-More info on code generation: <https://playwright.dev/docs/codegen>
-More info on Playwright UI Mode: <https://playwright.dev/docs/test-ui-mode>
+- More info on code generation: <https://playwright.dev/docs/codegen>
+- More info on Playwright UI Mode: <https://playwright.dev/docs/test-ui-mode>
 
 ---
 
@@ -139,12 +139,13 @@ graph LR
 2. Static Code Analysis (Linting, Typechecking and a Dry run of the test suite)
 3. Run the tests in all configured browsers
 4. Upload test report artifacts
+5. Publish html report to Github Pages
 
 ### fixtures
 
 Fixtures in playwright allow you to customize how tests run including setup/teardown hooks, class instantiation, annotations for reporting/analytics and advanced logging of test errors.
 
-A basic example is if you want to get run some api calls to get the some test data in a certain state for use with 25% of your tests you can run the api calls within the fixture instead of adding the step to 300 tests and any tests that consume them would run these first and not impact tests that do not require this action.
+A basic example is if you want to get run some api calls to get some test data in a certain state for use with 25% of your tests you can run the api calls within the fixture instead of adding the step to 300 tests and any tests that consume the fixture would run these first and not impact tests that do not require this action.
 
 Read more about test fixtures here: <https://playwright.dev/docs/test-fixtures>
 
@@ -160,7 +161,7 @@ Tests and setups are store in this directory. The search ticket spec leverages d
 
 #### setup
 
-Setup files allow you to perform actions setup the state necessary for your tests. A common usage would be logging into a website then storaging the cookies, local storage etc in a .json file then injecting it before a test runs to re-use the authentication state across all states and not waste time logging into a protected part of a website with each test.
+Setup files allow you to perform actions to setup the state necessary for your tests. A common usage would be logging into a website then storaging the cookies, local storage etc in a .json file then injecting it before a test runs to re-use the authentication state across all states and not waste time logging into a protected part of a website with each test.
 
 For this test suite it is used to consent to cookies to present a more conventional user path since some parts of the site will not work without consenting to cookies. Tests where you would want to test the user paths without consenting to cookies wouldn't use this setup as a dependency.
 
@@ -198,6 +199,11 @@ npm run check:style
 
 To see what all these commands are doing under the hook check them out in the `scripts` portion of the `package.json`.
 
+Go here to learn more about eslint: <https://eslint.org/>
+Go here to learn about the playwright specific linting rules: <https://github.com/playwright-community/eslint-plugin-playwright?tab=readme-ov-file>
+
+---
+
 ## Reporting
 
 The primary report in continuous integration is the playwright html report. Embedded within this report can be screenshots, logs, videos and traces.
@@ -209,10 +215,10 @@ The following are observations that were a little "odd" with the site.
 
 ### Calendar Widget
 
-- The calendar time is portugal timezone so if you want to book a train for today if will be disabled at midnight portugal time. This logically makes sense but should be indicated to the end user.
+- The calendar time is in the Portugal timezone so if you want to book a train for today if will be disabled at midnight Portugal time. This logically makes sense but should be indicated to the end user.
 - Today's date is always colored green even when you select a different date this can easily lead to confusion.
 - Selecting a date such as January 5th, 2024 then moving to December causes all instances of the `5th` to be highlighted green.
-- Typing the date out such as `31 December, 2023` when the site is in portuguese doesn't work and vice versa. This could be simplified by using 31/12/2023 or other number only variants.
+- Typing the date out such as `31 December, 2023` when the site is in Portuguese doesn't work and vice versa. This could be simplified by using 31/12/2023 or other number only variants.
 - Manually typing a date out of scope for scheduling (roughly 60 or more days) triggers the input field to glow red but there are no validation error messages displayed to indicate what the problem is. This is the case for all the input fields in both Portuguese and English.
 - There are some csp errors for the support chat fonts causing them not to render.
 
@@ -227,15 +233,16 @@ The following are observations that were a little "odd" with the site.
 
 From a test automation perspective these are improvements that can be made to the site to improve testibility and make test automation easier.
 
-- The locators for selectable dates in a month are hard to distinguish between 'disabled', 'in-focus' and 'out of focus' dates. Removing the `picker__day--infocus` class from disabled dates would vastly simplify locator scoping even better would be adding a test data attribute.
+- The locators for selectable dates in a month are hard to distinguish between 'disabled', 'in-focus' and 'out of focus' dates. Removing the `picker__day--infocus` class from disabled dates would vastly simplify locator scoping but even better would be adding a test data attribute.
 
-- Using the fill command in playwright does not enable the typeahead for station selection. To mitigate this without hacks I used `pressSequentially` which types each character sequentially. A majority of users likely select from the typeahead which is why I opted to use it instead of typing the station directly in the field. This is the case even when entering only a partial station name many other websites handle this perfectly fine so a nice quality of life improvement would change the code so the typeahead will appear even with the automated tests fill command.
+- Using the fill command in playwright does not enable the typeahead for station selection. To mitigate this without hacks I used `pressSequentially` which types each character sequentially. A majority of users likely select from the typeahead which is why I opted to use it instead of typing the station directly in the field. This is the case even when entering only a partial station name, many other websites handle this perfectly fine so a nice quality of life improvement would be to change the code so the typeahead will appear even with the automated tests fill command.
 
-- When clicking cancel and returning to the buy tickets page the previous selection is not coming from the server because the state is handled in purely angular. There's a massive amount of blocking scripts loading in the background before the angular code runs that enters the previous selected attributes. On slow connections (or fast automated tests) the end user could start re-typing it before it loads up. I mitigated this flakiness in the tests for waiting for the support chat button to appear since it seems to be one of the slowest items to load on the page.
-It should either be stored in some server side cache or the angular code should run earlier in the page load.
-- A lot of element attributes change language when switching to the Portguese version of the site. At some point I had to make the test compatible with both variations of the site just so I could feel confident the locators I selected would work in both since a lot of the default selectors from code generated tests use text or placeholder text which all changes.
-- There is a language cookie changed when switching between English and Portuguese but depending on the url route used it totally ignores it. This makes leveraging the locale cookie for test automation impossible because depending on what the initial url you use is it will overwrite the cookie. I opted to just use a locale parameter in the `goto` page object function but I could have also just set this as an environmental variable (e.g. PORTUGUESE=1 or LOCALE=pt) which is the approach I would take if long term it didn't make sense to run all tests in portuguese too but it's nice ability to run all the tests in either language by just injecting an enviromental variable.
-- How the site handles disabled attributes is different pretty much in every element across the site. A lot of this is custom and playwright doesn't detect it's disabled which indicates there may be a few accessibility issues with how it's implemented from using non-standard practices.
+- When clicking cancel and returning to the buy tickets page the previous selection is not coming from the server because the state is handled in purely angular. There's are a massive amount of blocking scripts loading in the background before the angular code runs that prefills the previously selected attributes. On slow connections (or fast automated tests) the end user could start re-typing it before it loads up. I mitigated this flakiness in the tests by waiting for the support chat button to appear since it seems to be one of the slowest items to load on the page. It should either be stored in a server side cache or the angular code should run earlier in the page load.
+
+- A lot of element attributes change language when switching to the Portguese version of the site. At some point I made the test run in both variations of the site just so I could feel confident the locators I selected would be compatible in both since a lot of the default selectors from code generated tests use text or placeholder text which all changes.
+
+- There is a language cookie that updates when switching between English and Portuguese but depending on the url route used it totally ignores it. This makes leveraging the locale cookie for test automation impossible because depending on what the initial url used it will overwrite the cookie. I opted to just use a locale parameter in the `goto` page object function but I could have also just set this as an environmental variable (e.g. `PORTUGUESE=1` or `LOCALE=pt`) which is the approach I would take if long term it didn't make sense to run all tests in Portuguese too. It's a nice to have to run all the tests in either language by just injecting an enviromental variable.
+- How the site handles disabled attributes is different pretty much in every element across the site. A lot of this is custom disabled logic and playwright doesn't detect the element is disabled which indicates there may be a few accessibility issues with how it's implemented by the devs using non-standard practices.
 
 ## Citations
 
