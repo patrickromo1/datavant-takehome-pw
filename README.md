@@ -199,8 +199,8 @@ npm run check:style
 
 To see what all these commands are doing under the hook check them out in the `scripts` portion of the `package.json`.
 
-Go here to learn more about eslint: <https://eslint.org/>
-Go here to learn about the playwright specific linting rules: <https://github.com/playwright-community/eslint-plugin-playwright?tab=readme-ov-file>
+- Go here to learn more about eslint: <https://eslint.org/>
+- Go here to learn about the playwright specific linting rules: <https://github.com/playwright-community/eslint-plugin-playwright?tab=readme-ov-file>
 
 ---
 
