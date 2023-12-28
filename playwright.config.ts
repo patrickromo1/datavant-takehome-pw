@@ -15,17 +15,14 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
-
+  workers: process.env.CI ? 2 : '25%',
+  reporter: process.env.CI ? [['list'], ['github'], ['html']] : [['list'], ['html']],
   use: {
     baseURL: 'https://www.cp.pt',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    trace: 'retain-on-failure',
-    testIdAttribute: 'ng-model' // Overwrites getByTestId locator strategy to leverage the ng-model attribute
+    trace: 'retain-on-failure'
   },
-
   /* Configure projects for major browsers */
   projects: [
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
@@ -38,7 +35,7 @@ export default defineConfig({
       dependencies: ['setup']
     },
     {
-      name: 'Mobile Safari',
+      name: 'mobile-safari',
       use: {
         ...devices['iPhone 14'],
         // Use prepared auth state.
@@ -48,7 +45,7 @@ export default defineConfig({
       dependencies: ['setup']
     },
     {
-      name: 'Desktop Safari',
+      name: 'desktop-safari',
       use: {
         ...devices['Desktop Safari'], // Use prepared auth state.
         storageState: 'playwright/.auth/cookie-consent.json'

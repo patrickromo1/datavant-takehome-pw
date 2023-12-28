@@ -5,6 +5,9 @@ interface FutureDate {
   sameMonth: boolean
 }
 
+/**
+ * Get the day of the month after adding daysInFuture and if it is in the same month.
+ */
 export const getFutureDate = (daysInFuture = 0): FutureDate => {
   const currentMonth = moment().month();
   const futureDate = moment().add(daysInFuture, 'days');

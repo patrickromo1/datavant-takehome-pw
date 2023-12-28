@@ -75,6 +75,9 @@ export class SearchTicketsPage {
     }
   }
 
+  /**
+   * @param locale - Pass in 'pt' to use the portuguese version of the site.
+   */
   async goto ({ locale = 'en' }: { locale?: string } = {}): Promise<void> {
     const searchUrl = locale === 'pt' ? 'passageiros/pt/comprar-bilhetes' : '/passageiros/en/buy-tickets';
     await this.page.goto(searchUrl, {
