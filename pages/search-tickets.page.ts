@@ -20,8 +20,8 @@ export class SearchTicketsPage {
     this.arrivalTextInput = this.page.locator('[ng-model="arrival"]');
     this.returnDateInput = this.page.locator('[ng-model="returnDate"]');
     this.inFocusDate = this.page.locator('[class*="picker__day--infocus"]');
-    this.nextMonthIcon = this.page.getByRole('button', { name: 'Next month' });
-    this.submitButton = this.page.getByRole('button', { name: 'Submit »' });
+    this.nextMonthIcon = this.page.locator('[class*="picker--opened"] [class*="picker__nav--next"]')
+    this.submitButton = this.page.locator('.mtop [type="submit"]');
     this.disableCookieAcceptButton = this.page.locator('[onclick*="javascript:disableCookieBar"]');
     this.chatBubble = this.page.locator('#ebcss-chat-button');
   }
@@ -75,8 +75,9 @@ export class SearchTicketsPage {
     }
   }
 
-  async goto (): Promise<void> {
-    await this.page.goto('/passageiros/en/buy-tickets', {
+  async goto ({ locale = 'en' }: { locale?: string } = {}): Promise<void> {
+    const searchUrl = locale === 'pt' ? 'passageiros/pt/comprar-bilhetes' : '/passageiros/en/buy-tickets';
+    await this.page.goto(searchUrl, {
       waitUntil: 'domcontentloaded'
     });
   }

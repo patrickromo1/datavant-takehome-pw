@@ -37,7 +37,6 @@ export default defineConfig({
       },
       dependencies: ['setup']
     },
-
     {
       name: 'Mobile Safari',
       use: {
@@ -48,7 +47,6 @@ export default defineConfig({
 
       dependencies: ['setup']
     },
-
     {
       name: 'Desktop Safari',
       use: {
