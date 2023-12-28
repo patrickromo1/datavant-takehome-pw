@@ -12,12 +12,14 @@ Playwright, Typescript and Github Actions.
   - [How to run tests](#how-to-run-tests)
   - [How to write new tests](#how-to-write-new-tests)
   - [Test Framework Directory Structure](#test-framework-directory-structure)
+    - [playwright.config.ts](#playwrightconfigts)
     - [.github](#github)
     - [fixtures](#fixtures)
     - [pages](#pages)
     - [tests](#tests)
       - [setup](#setup)
     - [util](#util)
+  - [Styleguide](#styleguide)
   - [Oddities](#oddities)
     - [Calendar Widget](#calendar-widget)
     - [General](#general)
@@ -107,6 +109,20 @@ More info on Playwright UI Mode: <https://playwright.dev/docs/test-ui-mode>
 
 ## Test Framework Directory Structure
 
+```mermaid
+graph LR
+    root[.] --> 1[playwright.config.ts]
+    root --> 2[.github]
+    root --> 3[fixtures]
+    root --> 4[pages]
+    root --> 5[tests]
+    root --> 6[util]
+```
+
+### playwright.config.ts
+
+- This config file is used by playwright to configure test runner attributes (e.g. retries, parallel workers, reporters, projects)
+
 ### .github
 
 - The github actions workflow file (`.github/workflows/playwright.yml`) is found here. It has 4 stages:
@@ -162,6 +178,18 @@ Utility functions that do not leverage aspects of the playwright api are stored 
 
 ---
 
+## Styleguide
+
+This project uses eslint with the standard typescript configuration and an additional playwright specific lint rule plugin.
+
+To run linting, typechecking and playwright dry-run validation identical to what is run in the ci pipeline run the below command.
+
+```sh
+npm run check:style
+```
+
+To see what all these commands are doing under the hook check them out in the `scripts` portion of the `package.json`.
+
 ## Oddities
 
 ### Calendar Widget
@@ -197,8 +225,20 @@ It should either be stored in some server side cache or the angular code should 
 ## Citations
 
 - <https://playwright.dev/>
+- <https://playwright.dev/docs/test-configuration>
+- <https://playwright.dev/docs/test-cli>
+- <https://playwright.dev/docs/emulation>
+- <https://playwright.dev/docs/test-global-setup-teardown>
+- <https://playwright.dev/docs/test-parameterize>
+- <https://playwright.dev/docs/test-reporters>
+- <https://playwright.dev/docs/test-ui-mode>
+- <https://playwright.dev/docs/codegen>
+- <https://playwright.dev/docs/api/class-playwright>
 - <https://github.com/playwright-community/eslint-plugin-playwright?tab=readme-ov-file>
 - <https://eslint.org/>
 - <https://momentjs.com/docs/#/get-set/date/>
 - <https://axolo.co/blog/p/part-3-github-pull-request-template>
 - <https://docs.github.com/en/actions/using-workflows/manually-running-a-workflow>
+- <https://gitlab.com/joaommpalmeiro/diagram-scratchpad/-/blob/master/README.md?ref_type=heads>
+- <https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix>
+- <https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts>
