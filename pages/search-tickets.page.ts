@@ -3,6 +3,7 @@ import { getFutureDate } from '../util/date-time';
 
 export class SearchTicketsPage {
   readonly page: Page;
+  readonly language: string;
   readonly departureTextInput: Locator;
   readonly departureDateInput: Locator;
   readonly arrivalTextInput: Locator;
@@ -13,8 +14,9 @@ export class SearchTicketsPage {
   readonly disableCookieAcceptButton: Locator;
   readonly chatBubble: Locator;
 
-  constructor (page: Page) {
+  constructor (page: Page, language = 'en') {
     this.page = page;
+    this.language = language;
     this.departureTextInput = this.page.locator('[ng-model="depart"]');
     this.departureDateInput = this.page.locator('[ng-model="departDate"]');
     this.arrivalTextInput = this.page.locator('[ng-model="arrival"]');
@@ -76,7 +78,8 @@ export class SearchTicketsPage {
   }
 
   async goto (): Promise<void> {
-    await this.page.goto('/passageiros/en/buy-tickets', {
+    const searchUrl = this.language === 'pt' ? 'passageiros/pt/comprar-bilhetes' : '/passageiros/en/buy-tickets';
+    await this.page.goto(searchUrl, {
       waitUntil: 'domcontentloaded'
     });
   }

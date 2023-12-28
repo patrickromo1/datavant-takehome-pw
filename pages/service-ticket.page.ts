@@ -5,7 +5,7 @@ export class ServiceTicketsPage {
   readonly cancelButton: Locator;
   readonly spinnerIcon: Locator;
 
-  constructor (page: Page) {
+  constructor (page: Page, language = 'en') {
     this.page = page;
     this.cancelButton = this.page.getByRole('button', { name: 'X Cancel' });
     this.spinnerIcon = this.page.getByRole('img', { name: 'wait' });
