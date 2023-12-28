@@ -4,7 +4,7 @@
   "description": "Take home test for Datavant automation role",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npx playwright install",
+    "postinstall": "npx playwright install --with-deps",
     "codegen": "npx playwright codegen https://www.cp.pt/passageiros/en/buy-tickets",
     "lint": "eslint .",
     "test": "playwright test --project=chromium",
