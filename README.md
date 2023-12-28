@@ -192,6 +192,8 @@ To see what all these commands are doing under the hook check them out in the `s
 
 ## Oddities
 
+The following are observations that were a little "odd" with the site.
+
 ### Calendar Widget
 
 - The calendar time is portugal timezone so if you want to book a train for today if will be disabled at midnight portugal time. This logically makes sense but should be indicated to the end user.
@@ -210,7 +212,7 @@ To see what all these commands are doing under the hook check them out in the `s
 
 ## Improvements
 
-From a test automation perspective this is the biggest source of friction.
+From a test automation perspective these are improvements that can be made to the site to improve testibility and make test automation easier.
 
 - The locators for selectable dates in a month are hard to distinguish between 'disabled', 'in-focus' and 'out of focus' dates. Removing the `picker__day--infocus` class from disabled dates would vastly simplify locator scoping even better would be adding a test data attribute.
 

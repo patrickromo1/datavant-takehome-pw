@@ -53,15 +53,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      - name: Download a playwright html report
+      - name: Download the playwright html report
         uses: actions/download-artifact@v3
         with:
           name: playwright-report
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: 'playwright-report'
+          # Upload the playwright report
+          path: './playwright-report'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
