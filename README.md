@@ -10,6 +10,7 @@ Playwright, Typescript and Github Actions.
   - [Setup Instructions](#setup-instructions)
     - [Setup Node.js](#setup-nodejs)
   - [How to run tests](#how-to-run-tests)
+    - [Run tests in Github Actions manually](#run-tests-in-github-actions-manually)
   - [How to write new tests](#how-to-write-new-tests)
   - [Test Framework Directory Structure](#test-framework-directory-structure)
     - [playwright.config.ts](#playwrightconfigts)
@@ -91,6 +92,12 @@ npx playwright test --project=desktop-safari --headed
 ```
 
 All CLI options can be found here <https://playwright.dev/docs/test-cli>
+
+### Run tests in Github Actions manually
+
+1. Go to <https://github.com/patrickromo1/datavant-takehome-pw/actions/workflows/playwright.yml>
+2. Click the `RUN WORKFLOW` dropdown button.
+3. Click the `Run Workflow` button in the pop-up.
 
 ## How to write new tests
 
